@@ -10,3 +10,4 @@ data/import/*.sql
 auth.env
 api-gateway.env
 syncing-server.env
+docker-compose.yml

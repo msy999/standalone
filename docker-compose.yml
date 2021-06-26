@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   syncing-server-js:
-    image: standardnotes/syncing-server-js:1.35.1
+    image: standardnotes/syncing-server-js:latest
     depends_on:
       - db
       - cache
@@ -18,7 +18,7 @@ services:
       - standardnotes_standalone
 
   syncing-server-js-worker:
-    image: standardnotes/syncing-server-js:1.35.1
+    image: standardnotes/syncing-server-js:latest
     depends_on:
       - db
       - cache
@@ -37,7 +37,7 @@ services:
       - standardnotes_standalone
 
   api-gateway:
-    image: standardnotes/api-gateway:1.19.0
+    image: standardnotes/api-gateway:latest
     depends_on:
       - auth
       - syncing-server-js
@@ -56,7 +56,7 @@ services:
       - standardnotes_standalone
 
   auth:
-    image: standardnotes/auth:1.11.0
+    image: standardnotes/auth:latest
     depends_on:
       - db
       - cache
@@ -84,7 +84,7 @@ services:
       - standardnotes_standalone
 
   auth-worker:
-    image: standardnotes/auth:1.11.0
+    image: standardnotes/auth:latest
     depends_on:
       - db
       - cache
@@ -111,25 +111,9 @@ services:
     networks:
       - standardnotes_standalone
 
-  db:
-    image: mysql:5.6
-    environment:
-      MYSQL_DATABASE: '${DB_DATABASE}'
-      MYSQL_USER: '${DB_USERNAME}'
-      MYSQL_PASSWORD: '${DB_PASSWORD}'
-      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
-    ports:
-      - 3306
-    restart: unless-stopped
-    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8 --collation-server=utf8_general_ci
-    volumes:
-      - ./data/mysql:/var/lib/mysql
-      - ./data/import:/docker-entrypoint-initdb.d
-    networks:
-      - standardnotes_standalone
 
   cache:
-    image: redis:6.0-alpine
+    image: redis:latest
     volumes:
       - ./data/redis/:/data
     ports:
